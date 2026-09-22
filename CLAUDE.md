@@ -5,5 +5,5 @@ valores exactos — nunca inventes ni aproximes colores o tipografía:
 
 - Color primario: #141414 (ink) · Color secundario: #f4efde (cream)
 - Tipografía display: Thocant · Tipografía de cuerpo: Acumin Variable Concept
-- Logo: usar los archivos en `design-system/assets/` tal cual, nunca
+- Logo: usar los archivos en `design-system/assets/logo/svg/` tal cual, nunca
   recolorear, distorsionar ni reposicionar el ícono respecto al wordmark.
