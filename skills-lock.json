@@ -13,6 +13,12 @@
       "skillPath": "skills/animate-expo/SKILL.md",
       "computedHash": "5de09593d564091f9db60aabede7bed760251e118548272050a247c653c417d2"
     },
+    "animation-on-scroll": {
+      "source": "MengTo/Skills",
+      "sourceType": "github",
+      "skillPath": "agent-skills/web-design/animation-on-scroll/SKILL.md",
+      "computedHash": "ec4d5c9f465216c6f16339ab8324158ae105e6a4a848d25218064bff978f3b4f"
+    },
     "animation-vocabulary": {
       "source": "emilkowalski/skills",
       "sourceType": "github",
@@ -36,6 +42,12 @@
       "sourceType": "github",
       "skillPath": "skills/brandkit/SKILL.md",
       "computedHash": "b63012f3c3d21197e0185d3e9cc7ec40c589fb10e0b5a32a561739de31aa3f20"
+    },
+    "cinematic-gsap-lenis-motion-system": {
+      "source": "MengTo/Skills",
+      "sourceType": "github",
+      "skillPath": "agent-skills/web-design/cinematic-gsap-lenis-motion-system/SKILL.md",
+      "computedHash": "c88995e62e587f7d2eaaa514131912a0ed5b77613513fdf61a938e51298ded4c"
     },
     "design-taste-frontend": {
       "source": "Leonxlnx/taste-skill",
