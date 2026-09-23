@@ -37,7 +37,8 @@ Dos colores de marca — ver `tokens.json` para valores exactos (hex, RGB, CMYK,
 
 - **`ink`** `#141414` — color primario. Aporta seriedad y equilibrio, contrarrestando el carácter animado del logo; refuerza la autenticidad y solidez de la marca sin perder creatividad.
 - **`cream`** `#f4efde` — color secundario. Aporta calidez, equilibrio y suavidad; funciona como complemento que genera cercanía y armonía visual.
-- **`gold`** `#efe2c4` y **`charcoal`** `#3c3c37` — tonos de apoyo encontrados en los recursos vectoriales de marca, para acentos y ornamentos. No sustituyen a los dos colores principales.
+- **`gold`** `#efe2c4` — la tinta real del logo en su versión clara según el archivo vectorial de recursos. Ojo: el logo claro **no** es #f4efde; #f4efde es el color de fondo claro.
+- **`charcoal`** `#3c3c37` — color de los ornamentos tipo bigote.
 
 **Regla de uso incorrecto documentada en el manual:** nunca aplicar al logo un color distinto a `ink` o `cream` (el manual muestra explícitamente un ejemplo en verde marcado como error).
 
@@ -52,22 +53,22 @@ Dos colores de marca — ver `tokens.json` para valores exactos (hex, RGB, CMYK,
 
 La marca Ashy está conformada por un **imagotipo** compuesto por un ícono (la cara del gato) y el nombre ("ASHY" en lettering custom, distinto de Thocant). Ambos elementos pueden funcionar juntos o de manera independiente — ver grupo de assets **Logo** más abajo.
 
-**Variantes disponibles:**
+**Variantes disponibles** (grupo de assets **Logo**, todas en SVG vectorial extraído directamente de `Recursos_Página_Ashy.svg`):
 | Archivo | Descripción |
 |---|---|
-| `logo-lockup-cream.png` | Imagotipo completo (ícono + wordmark), crema sobre negro — versión principal |
-| `logo-lockup-black.png` | Imagotipo completo, negro sobre crema — versión invertida |
-| `icon-cream.png` | Solo el ícono (cara del gato), trazo crema — para usos donde el nombre no es necesario (favicon, avatar, sello) |
-| `icon-black.png` | Solo el ícono, trazo negro |
-| `wordmark-cream.png` | Solo el wordmark "ASHY", crema — para firma o usos horizontales angostos |
-| `wordmark-black.png` | Solo el wordmark "ASHY", negro |
+| `logo-lockup-black.svg` | Imagotipo completo (ícono + wordmark) en `ink` — para fondos claros |
+| `logo-lockup-cream.svg` | Imagotipo completo en `gold` — para fondos oscuros |
+| `icon-black.svg` | Solo el ícono (cara del gato) en `ink` |
+| `icon-cream.svg` | Solo el ícono en `gold` |
+| `wordmark-black.svg` | Solo el wordmark "ASHY" en `ink` |
+| `wordmark-cream.svg` | Solo el wordmark en `gold` |
 
 **Usos incorrectos (documentados explícitamente en el manual — página "Usos incorrectos"):**
 1. No distorsionar el imagotipo.
 2. No mover ni reposicionar sus elementos (ícono/wordmark) de forma independiente.
 3. No cambiar la posición relativa entre ícono y wordmark.
 4. No cambiar la tipografía del wordmark.
-5. No aplicar colores que no sean `ink` o `cream`.
+5. No aplicar colores distintos a los de marca: `ink` para la versión oscura y `gold` (#efe2c4) para la versión clara, como vienen en los archivos.
 6. No exagerar proporciones ni cambiar el tamaño de forma desigual entre elementos.
 
 ### Aplicaciones de marca (referencia)
@@ -78,21 +79,26 @@ El manual muestra el imagotipo aplicado en: cuaderno con cubierta en `ink` y log
 
 ## 3. Iconografía y ornamentos
 
-Además del ícono principal (el gato), el archivo de recursos vectoriales incluye un motivo ornamental recurrente: pares de **cápsulas/trazos** (tipo "bigote") en `charcoal`, dispuestos en ángulo (~9°–12°) a los lados de elementos de layout — un guiño visual a los bigotes del gato. Úsalos como acento decorativo puntual, nunca como patrón denso ni como sustituto del ícono.
+Además del ícono principal, el archivo de recursos trae un ornamento recurrente: pares de **bigotes** (cápsulas redondeadas en `charcoal`, inclinadas ~9° y ~12°), un guiño a los bigotes del gato. Están en el grupo de assets **Ornamentos**:
 
----
+| Archivo | Descripción |
+|---|---|
+| `whiskers-pair-left.svg` / `whiskers-pair-right.svg` | Par completo de bigotes, en espejo, para flanquear un elemento por ambos lados |
+| `whiskers-edge-left.svg` / `whiskers-edge-right.svg` | Par de borde: cortado recto para pegarse al filo izquierdo o derecho de una composición (así aparece en la página "El gato" del manual). En el archivo fuente va al 20% de opacidad |
+
+Úsalos como acento puntual, siempre en pares y en espejo; nunca como patrón denso ni como sustituto del ícono.
 
 ## 4. Ejemplo de uso correcto
 
-- Sobre fondo `ink`: imagotipo o ícono en `cream`.
+- Sobre fondo `ink`: imagotipo o ícono en su versión clara (`gold`, archivos `*-cream.svg`).
 - Sobre fondo `cream`: imagotipo o ícono en `ink`.
 - Títulos de sección en `Thocant` (display); cuerpo de texto en `Acumin Variable Concept`.
-- Mantener siempre la relación de tamaño y posición entre ícono y wordmark tal como se entrega en `logo-lockup-cream.png` / `logo-lockup-black.png`.
+- Mantener siempre la relación de tamaño y posición entre ícono y wordmark tal como se entrega en `logo-lockup-cream.svg` / `logo-lockup-black.svg`.
 
 ---
 
 ## Notas de origen
 
 - Fuente: `MARCA_PERSONAL_ASHY_A-1.pdf` (Manual de Identidad, Adobe Illustrator, 29 páginas) y `Recursos_Página_Ashy.svg`, ambos entregados por la usuaria.
-- Los PNG del grupo **Logo** son recortes de alta resolución extraídos de esas fuentes (renderizados a partir del vector); para producción final (impresión, señalética grande) usar los archivos maestros originales en Illustrator.
+- Todos los assets son SVG vectoriales separados directamente de `Recursos_Página_Ashy.svg`, con sus trazados y colores originales intactos; sirven para producción. El paquete descargable incluye además versiones PNG transparentes.
 - Colores y valores (hex/RGB/CMYK/Pantone) copiados exactamente como aparecen en el manual, sin redondear ni reinterpretar.
