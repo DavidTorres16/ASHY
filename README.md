@@ -15,6 +15,8 @@ animaciones ni el ícono del botón de tema: el navegador no ejecuta módulos Ja
 `file://`. Para verla completa hay que usar `npm run dev` o publicar `dist/`.
 
 - `index.html`, `src/styles.css`, `src/main.js`: la landing.
+- `src/works/`: trabajos del portafolio por disciplina (diseño gráfico, 3D, ilustración).
+  Para subir uno, ver [`src/works/README.md`](src/works/README.md).
 - `design-system/`: tokens, libro de marca y assets (logo y ornamentos) que usa la página.
 
 ## Publicación (GitHub Pages)
@@ -26,6 +28,7 @@ Requisito único: en Settings → Pages → Build and deployment, elegir **Sourc
 
 ## Pendientes
 
-- Imágenes de los proyectos: hoy la página muestra skeletons marcados con `TODO` en `index.html`.
+- Trabajos: ninguna disciplina tiene trabajos todavía, así que se ven skeletons. Se suben en `src/works/`.
+- Descripciones de cada disciplina en `src/works/works.js`: son una propuesta, confirmar con Ashley.
 - Correo de contacto: el botón "Escríbeme" tiene un `mailto:` vacío.
 - Fuentes Thocant y Acumin Variable Concept: mientras no estén en `design-system/fonts/`, se usan Fredoka y Archivo como sustitutas.

@@ -335,20 +335,50 @@ ul {
   width: var(--card);
   height: var(--card);
   margin-left: calc(var(--card) / -2);
-  transform: translateX(calc(var(--x) * var(--fan) * var(--card) * 0.62))
-    translateY(calc(var(--y) * var(--fan) + var(--drop, 0px))) rotate(calc(var(--r) * var(--fan) * 1deg));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  color: var(--fg);
+  text-align: left;
+  text-decoration: none;
+  transform: translateX(calc(var(--x) * var(--fan) * var(--card) * 0.72))
+    translateY(calc(var(--y) * var(--fan) + var(--drop, 0px) + var(--lift, 0px)))
+    rotate(calc(var(--r) * var(--fan) * 1deg));
+  transition: transform 0.35s var(--ease-out), background-color 0.35s var(--ease-out);
 }
 
-.deck__card .card__inner {
-  transition: transform 0.35s var(--ease-out);
-}
-
-.deck__card:hover {
+.deck__card:hover,
+.deck__card:focus-visible {
   z-index: 5;
+  --lift: -14px;
 }
 
-.deck__card:hover .card__inner {
-  transform: translateY(-12px) rotate(calc(var(--r) * -0.5deg));
+.deck__media {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+}
+
+.deck__media--mark {
+  display: grid;
+  place-items: center;
+}
+
+.deck__media img:not(.card__mark) {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.deck__label {
+  padding: var(--space-3);
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  font-stretch: 100%;
 }
 
 .hero__role {
@@ -448,77 +478,181 @@ ul {
   text-transform: uppercase;
 }
 
-/* Featured work */
-.featured {
-  padding: calc(var(--space-6) * 1.5) 0 calc(var(--space-6) * 2);
-  overflow-x: clip;
+/* Works: three disciplines, one presentation standard */
+.works {
+  padding: calc(var(--space-6) * 1.5) var(--space-4) calc(var(--space-6) * 2);
 }
 
-.featured__row {
-  --tilt: 1;
+.discipline-nav {
+  position: sticky;
+  top: var(--space-4);
+  z-index: 10;
   display: flex;
-  justify-content: center;
-  gap: clamp(var(--space-4), 4vw, var(--space-6));
-  padding: var(--space-5) var(--space-4);
-}
-
-.featured__item {
-  display: grid;
-  justify-items: center;
-  gap: var(--space-4);
-  flex: 0 0 clamp(260px, 30vw, 440px);
-}
-
-.featured__card {
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  transform: rotate(calc(var(--r) * var(--tilt) * 1deg));
-  transition: transform 0.45s var(--ease-out);
-}
-
-.featured__item:hover .featured__card {
-  transform: rotate(0deg) translateY(-8px);
-}
-
-.pill {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 112px;
-  height: 40px;
+  gap: var(--space-1);
+  width: fit-content;
+  margin: 0 auto var(--space-5);
+  padding: var(--space-1);
   border-radius: var(--radius-full);
-  background: var(--soft);
+  background: var(--bg);
+  box-shadow: var(--shadow);
+  transition: background-color 0.35s var(--ease-out);
 }
 
-.pill .bar {
-  width: 56%;
-  height: 10px;
+.discipline-nav__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-full);
+  color: var(--fg);
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  font-stretch: 100%;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.3s var(--ease-out), color 0.3s var(--ease-out);
 }
 
-/* More work: 6 items, 6 cells, no empty tile */
-.more {
-  padding: var(--space-6) var(--space-4) calc(var(--space-6) * 2);
+.discipline-nav__link[aria-current="true"] {
+  background: var(--fg);
+  color: var(--bg);
 }
 
-.bento {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-auto-rows: clamp(180px, 22vw, 320px);
-  grid-template-areas:
-    "a a b"
-    "c d b"
-    "f e e";
-  gap: var(--space-4);
+.discipline-nav__link .short,
+.deck__label .short {
+  display: none;
+}
+
+.discipline {
   max-width: 1280px;
   margin: 0 auto;
+  padding-top: var(--space-5);
+  scroll-margin-top: calc(var(--space-6) + var(--space-4));
 }
 
-.bento__cell--a { grid-area: a; }
-.bento__cell--b { grid-area: b; }
-.bento__cell--c { grid-area: c; }
-.bento__cell--d { grid-area: d; }
-.bento__cell--e { grid-area: e; }
-.bento__cell--f { grid-area: f; }
+.discipline + .discipline {
+  margin-top: calc(var(--space-6) * 1.5);
+}
+
+.discipline__head {
+  display: grid;
+  gap: var(--space-2);
+  margin-bottom: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1.5px solid var(--fg);
+}
+
+.discipline__title {
+  font-family: var(--font-display);
+  font-size: 44px;
+  line-height: 48px;
+  font-weight: 700;
+}
+
+.discipline__desc {
+  max-width: 65ch;
+}
+
+.discipline__meta {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  font-stretch: 100%;
+}
+
+/* Same template in every discipline: the first work leads at double size, the rest follow. */
+.works-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.work {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.work__link {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-3);
+  color: inherit;
+  text-decoration: none;
+}
+
+.work__media {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+
+.work__media img:not(.card__mark) {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease-out);
+}
+
+.work__link:hover .work__media img {
+  transform: scale(1.03);
+}
+
+/* The lead is wide; with 3+ works it also spans two rows and fills them. */
+.work:first-child {
+  grid-column: span 2;
+}
+
+.work:first-child .work__media {
+  aspect-ratio: 16 / 10;
+}
+
+.work:first-child:nth-last-child(n + 3) {
+  grid-row: span 2;
+}
+
+.work:first-child:nth-last-child(n + 3) .work__media {
+  flex: 1;
+  min-height: 0;
+  aspect-ratio: auto;
+}
+
+.work__caption {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.work__title {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+  font-stretch: 100%;
+}
+
+.work__meta {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  font-stretch: 100%;
+}
+
+.work--skeleton .work__caption .bar {
+  width: 48%;
+}
+
+.work--skeleton .work__caption .bar--short {
+  width: 28%;
+}
 
 /* Contact: the page's single deliberate color block */
 .contact {
@@ -624,9 +758,25 @@ ul {
     line-height: 76px;
   }
 
-  .section-head__title {
+  .section-head__title,
+  .discipline__title {
     font-size: 72px;
     line-height: 76px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .works-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .work:first-child:nth-last-child(n + 3) {
+    grid-row: span 1;
+  }
+
+  .work:first-child:nth-last-child(n + 3) .work__media {
+    flex: none;
+    aspect-ratio: 16 / 10;
   }
 }
 
@@ -662,8 +812,9 @@ ul {
   }
 
   .deck__card {
-    transform: translateX(calc(var(--x) * var(--fan) * var(--card) * 0.34))
-      translateY(calc(var(--y) * var(--fan) + var(--drop, 0px))) rotate(calc(var(--r) * var(--fan) * 1deg));
+    transform: translateX(calc(var(--x) * var(--fan) * var(--card) * 0.56))
+      translateY(calc(var(--y) * var(--fan) + var(--drop, 0px) + var(--lift, 0px)))
+      rotate(calc(var(--r) * var(--fan) * 1deg));
   }
 
   .about {
@@ -698,27 +849,39 @@ ul {
     line-height: 36px;
   }
 
-  .featured__row {
-    justify-content: flex-start;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-padding-inline: var(--space-4);
-    scrollbar-width: none;
+  .works {
+    padding-inline: var(--space-3);
   }
 
-  .featured__item {
-    flex-basis: 76vw;
-    scroll-snap-align: center;
+  .discipline-nav__link {
+    padding: 0 var(--space-3);
   }
 
-  .bento {
+  .discipline-nav__link .long,
+  .deck__label .long {
+    display: none;
+  }
+
+  .discipline-nav__link .short,
+  .deck__label .short {
+    display: inline;
+  }
+
+  .discipline__title {
+    font-size: 32px;
+    line-height: 36px;
+  }
+
+  .works-grid {
     grid-template-columns: minmax(0, 1fr);
-    grid-template-areas: none;
-    grid-auto-rows: auto;
   }
 
-  .bento__cell {
-    grid-area: auto;
+  .work:first-child {
+    grid-column: auto;
+  }
+
+  .work:first-child .work__media,
+  .work:first-child:nth-last-child(n + 3) .work__media {
     aspect-ratio: 1 / 1;
   }
 
