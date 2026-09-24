@@ -1,6 +1,3 @@
-import '@fontsource-variable/fredoka';
-import '@fontsource-variable/archivo/wdth.css';
-import './styles.css';
 import themeIcon from '@phosphor-icons/core/assets/regular/circle-half.svg?raw';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
