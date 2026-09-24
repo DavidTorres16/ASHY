@@ -17,6 +17,13 @@ animaciones ni el ícono del botón de tema: el navegador no ejecuta módulos Ja
 - `index.html`, `src/styles.css`, `src/main.js`: la landing.
 - `design-system/`: tokens, libro de marca y assets (logo y ornamentos) que usa la página.
 
+## Publicación (GitHub Pages)
+
+`.github/workflows/deploy-pages.yml` compila el sitio y publica `dist/` en cada push a `main`
+(también se puede lanzar a mano desde la pestaña Actions). URL: https://davidtorres16.github.io/ASHY/
+
+Requisito único: en Settings → Pages → Build and deployment, elegir **Source: GitHub Actions**.
+
 ## Pendientes
 
 - Imágenes de los proyectos: hoy la página muestra skeletons marcados con `TODO` en `index.html`.
