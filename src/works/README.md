@@ -28,10 +28,13 @@ Dentro de `works: [ ... ]` de la disciplina correspondiente:
   year: 2026,
   client: 'Café Luna',
   link: 'https://www.behance.net/...',
+  featured: true,
 },
 ```
 
-- `title`, `image` y `alt` son obligatorios. `year`, `client` y `link` son opcionales.
+- `title`, `image` y `alt` son obligatorios. `year`, `client`, `link` y `featured` son opcionales.
+- `featured: true` lo muestra también en **Trabajo destacado**, la sección que mezcla las tres
+  disciplinas en tarjetas inclinadas (máximo 3 en total, en el orden del archivo).
 - **El orden importa:** el primer trabajo de la lista es la pieza principal. Se ve más grande
   en su sección y aparece en la tarjeta de esa disciplina en la portada.
 - Mientras una disciplina no tenga trabajos, muestra skeletons y "Próximamente".
