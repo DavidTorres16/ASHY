@@ -14,6 +14,7 @@ const workImages = import.meta.glob('./works/images/*/*.{jpg,jpeg,png,webp,avif}
 setupTheme();
 setupYear();
 renderWorks();
+renderFeatured();
 setupDisciplineNav();
 const contactWord = setupContactWord();
 setupMotion(contactWord);
@@ -104,6 +105,17 @@ function setupMotion(contactWord) {
         ),
     });
 
+    // Featured cards arrive more tilted and settle onto the table as the row scrolls in.
+    gsap.fromTo(
+      '.featured__row',
+      { '--tilt': 2.4 },
+      {
+        '--tilt': 1,
+        ease: 'none',
+        scrollTrigger: { trigger: '.featured__row', start: 'top bottom', end: 'center center', scrub: true },
+      },
+    );
+
     // Closing word rises letter by letter once, as the last beat of the page.
     gsap.from(contactWord.querySelectorAll('.char'), {
       yPercent: 110,
@@ -115,6 +127,15 @@ function setupMotion(contactWord) {
   });
 }
 
+function worksOf(discipline) {
+  return discipline.works
+    .map((work) => ({ ...work, discipline, src: workImages[`./works/images/${discipline.id}/${work.image}`] }))
+    .filter((work) => {
+      if (!work.src) console.warn(`[works] No existe images/${discipline.id}/${work.image} (${work.title}).`);
+      return work.src;
+    });
+}
+
 // Each discipline keeps its skeletons until works.js lists at least one work for it.
 function renderWorks() {
   for (const discipline of disciplines) {
@@ -122,12 +143,7 @@ function renderWorks() {
     section.querySelector('.discipline__title').textContent = discipline.name;
     section.querySelector('.discipline__desc').textContent = discipline.description;
 
-    const works = discipline.works
-      .map((work) => ({ ...work, src: workImages[`./works/images/${discipline.id}/${work.image}`] }))
-      .filter((work) => {
-        if (!work.src) console.warn(`[works] No existe images/${discipline.id}/${work.image} (${work.title}).`);
-        return work.src;
-      });
+    const works = worksOf(discipline);
     if (!works.length) continue;
 
     section.querySelector('[data-count]').textContent =
@@ -141,6 +157,25 @@ function renderWorks() {
     deckMedia.classList.remove('deck__media--mark');
     deckMedia.innerHTML = `<img src="${works[0].src}" alt="" loading="eager" decoding="async" />`;
   }
+}
+
+// Up to three works flagged `featured: true`, from any discipline; empty slots stay as skeletons.
+function renderFeatured() {
+  const featured = disciplines.flatMap(worksOf).filter((work) => work.featured).slice(0, 3);
+  if (!featured.length) return;
+
+  const row = document.querySelector('[data-featured]');
+  const items = row.querySelectorAll('.featured__item');
+  featured.forEach((work, index) => {
+    const href = work.link ?? `#${work.discipline.id}`;
+    const external = work.link ? ' target="_blank" rel="noopener"' : '';
+    items[index].innerHTML = `
+      <a class="card featured__card" href="${escapeHtml(href)}"${external}>
+        <img src="${work.src}" alt="${escapeHtml(work.alt ?? '')}" loading="lazy" decoding="async" />
+      </a>
+      <figcaption class="pill pill--text">${escapeHtml(work.title)}</figcaption>`;
+  });
+  if (featured.length === items.length) row.removeAttribute('aria-busy');
 }
 
 function workTemplate(work) {

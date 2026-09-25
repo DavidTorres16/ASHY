@@ -8,10 +8,14 @@
 //     year: 2026,                            // opcional
 //     client: 'Cliente',                     // opcional
 //     link: 'https://www.behance.net/...',   // opcional, abre el proyecto completo
+//     featured: true,                        // opcional, lo muestra en "Trabajo destacado"
 //   },
 //
 // El primer trabajo de cada disciplina es la pieza principal: se muestra más grande
 // y también aparece en la tarjeta de esa disciplina en la portada.
+//
+// "Trabajo destacado" mezcla las tres disciplinas: muestra hasta 3 trabajos con
+// featured: true, en el orden de este archivo.
 
 export const disciplines = [
   {
