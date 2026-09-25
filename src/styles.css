@@ -667,25 +667,22 @@ ul {
   transition: background-color 0.35s var(--ease-out), color 0.35s var(--ease-out);
 }
 
+/* Edge whiskers sit flush to both edges; the word is fitted to the space between them. */
+.contact__title-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(var(--space-3), 2vw, var(--space-5));
+  width: 100%;
+}
+
 .whiskers-edge {
-  position: absolute;
-  top: calc(var(--space-6) * 1.25);
-  width: clamp(72px, 10vw, 150px);
+  width: clamp(48px, 9vw, 150px);
   height: auto;
   opacity: var(--ornament-opacity);
 }
 
-.whiskers-edge--left {
-  left: 0;
-}
-
-.whiskers-edge--right {
-  right: 0;
-}
-
 .contact__word {
-  width: 100%;
-  padding: 0 var(--space-3);
   overflow: hidden;
   font-family: var(--font-display);
   font-size: 18vw;
@@ -883,10 +880,6 @@ ul {
   .work:first-child .work__media,
   .work:first-child:nth-last-child(n + 3) .work__media {
     aspect-ratio: 1 / 1;
-  }
-
-  .whiskers-edge {
-    top: var(--space-5);
   }
 
   .footer {
