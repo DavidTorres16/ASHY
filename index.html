@@ -6,7 +6,7 @@
     <title>Ashley Taborda · Ashy</title>
     <meta
       name="description"
-      content="Ashley Taborda (@Ashy), diseñadora visual digital, artista 3D e ilustradora."
+      content="Ashley Taborda (@Ashy), diseñadora gráfica, artista 3D e ilustradora."
     />
     <link rel="icon" type="image/svg+xml" href="./design-system/assets/logo/svg/icon-black.svg" />
     <meta name="theme-color" content="#f4efde" media="(prefers-color-scheme: light)" />
@@ -51,34 +51,25 @@
         <p class="eyebrow hero__handle" data-hero>@Ashy</p>
         <h1 class="hero__name" id="hero-title" data-hero>Ashley Taborda</h1>
 
-        <div class="deck" aria-label="Proyectos próximamente" aria-busy="true">
-          <div class="card card--soft deck__card" style="--x: -1.5; --r: -9; --y: 14px">
-            <div class="card__inner">
-              <span class="bar"></span>
-              <span class="bar bar--short"></span>
-            </div>
-          </div>
-          <div class="card card--strong deck__card" style="--x: -0.5; --r: -3; --y: -10px">
-            <div class="card__inner card__inner--mark">
+        <nav class="deck" aria-label="Disciplinas">
+          <a class="card card--soft deck__card" href="#diseno-grafico" data-deck="diseno-grafico" style="--x: -1; --r: -8; --y: 16px">
+            <span class="deck__media"></span>
+            <span class="deck__label"><span class="long">Diseño gráfico</span><span class="short">Gráfico</span></span>
+          </a>
+          <a class="card card--strong deck__card" href="#diseno-3d" data-deck="diseno-3d" style="--x: 0; --r: -1; --y: -8px">
+            <span class="deck__media deck__media--mark">
               <img class="card__mark logo--for-dark" src="./design-system/assets/logo/svg/icon-cream.svg" alt="" />
               <img class="card__mark logo--for-light" src="./design-system/assets/logo/svg/icon-black.svg" alt="" />
-            </div>
-          </div>
-          <div class="card card--outline deck__card" style="--x: 0.5; --r: 4; --y: 6px">
-            <div class="card__inner">
-              <span class="bar"></span>
-              <span class="bar bar--short"></span>
-            </div>
-          </div>
-          <div class="card card--soft deck__card" style="--x: 1.5; --r: 10; --y: 20px">
-            <div class="card__inner">
-              <span class="bar"></span>
-              <span class="bar bar--short"></span>
-            </div>
-          </div>
-        </div>
+            </span>
+            <span class="deck__label"><span class="long">Diseño 3D</span><span class="short">3D</span></span>
+          </a>
+          <a class="card card--outline deck__card" href="#ilustracion" data-deck="ilustracion" style="--x: 1; --r: 7; --y: 12px">
+            <span class="deck__media"></span>
+            <span class="deck__label"><span class="long">Ilustración</span><span class="short">Ilustración</span></span>
+          </a>
+        </nav>
 
-        <p class="hero__role" data-hero>Diseñadora visual, artista 3D e ilustradora</p>
+        <p class="hero__role" data-hero>Diseñadora gráfica, artista 3D e ilustradora</p>
         <a class="btn hero__cta" href="#trabajo" data-hero>Ver trabajo</a>
       </section>
 
@@ -86,7 +77,7 @@
         <div class="about__statement" data-reveal>
           <img class="whiskers whiskers--left" src="./design-system/assets/ornamentos/svg/whiskers-pair-left.svg" alt="" />
           <h2 class="about__title" id="about-title">
-            Creo personajes 3D e ilustraciones que convierten ideas en experiencias visuales.
+            Diseño, modelo e ilustro ideas hasta convertirlas en experiencias visuales.
           </h2>
           <img class="whiskers whiskers--right" src="./design-system/assets/ornamentos/svg/whiskers-pair-right.svg" alt="" />
         </div>
@@ -107,74 +98,94 @@
         </ul>
       </section>
 
-      <section class="featured" id="trabajo" aria-labelledby="featured-title">
+      <section class="works" id="trabajo" aria-labelledby="works-title">
         <header class="section-head" data-reveal>
-          <h2 class="section-head__title" id="featured-title">Trabajo destacado</h2>
-          <p class="section-head__sub">Una selección de proyectos recientes.</p>
+          <h2 class="section-head__title" id="works-title">Juntos, pero no revueltos.</h2>
+          <p class="section-head__sub">Tres disciplinas, cada una en su lugar.</p>
         </header>
 
-        <!-- TODO: reemplazar cada skeleton por la imagen real del proyecto (4:5) y su nombre. -->
-        <div class="featured__row" aria-busy="true">
-          <figure class="featured__item" style="--r: -5">
-            <div class="card card--strong featured__card" aria-label="Proyecto próximamente">
-              <div class="card__inner card__inner--mark">
-                <img class="card__mark logo--for-dark" src="./design-system/assets/logo/svg/icon-cream.svg" alt="" />
-                <img class="card__mark logo--for-light" src="./design-system/assets/logo/svg/icon-black.svg" alt="" />
-              </div>
-            </div>
-            <figcaption class="pill"><span class="bar"></span></figcaption>
-          </figure>
-          <figure class="featured__item" style="--r: 2">
-            <div class="card card--soft featured__card" aria-label="Proyecto próximamente">
-              <div class="card__inner">
-                <span class="bar"></span>
-                <span class="bar bar--short"></span>
-              </div>
-            </div>
-            <figcaption class="pill"><span class="bar"></span></figcaption>
-          </figure>
-          <figure class="featured__item" style="--r: 6">
-            <div class="card card--outline featured__card" aria-label="Proyecto próximamente">
-              <div class="card__inner">
-                <span class="bar"></span>
-                <span class="bar bar--short"></span>
-              </div>
-            </div>
-            <figcaption class="pill"><span class="bar"></span></figcaption>
-          </figure>
-        </div>
-      </section>
+        <nav class="discipline-nav" aria-label="Ir a una disciplina">
+          <a class="discipline-nav__link" href="#diseno-grafico"><span class="long">Diseño gráfico</span><span class="short">Gráfico</span></a>
+          <a class="discipline-nav__link" href="#diseno-3d"><span class="long">Diseño 3D</span><span class="short">3D</span></a>
+          <a class="discipline-nav__link" href="#ilustracion"><span class="long">Ilustración</span><span class="short">Ilustración</span></a>
+        </nav>
 
-      <section class="more" aria-labelledby="more-title">
-        <header class="section-head" data-reveal>
-          <h2 class="section-head__title" id="more-title">Más trabajo</h2>
-          <p class="section-head__sub">Ilustración, personajes 3D y piezas visuales.</p>
-        </header>
+        <!-- Las descripciones y los trabajos de cada disciplina salen de src/works/works.js. -->
+        <section class="discipline" id="diseno-grafico" aria-labelledby="diseno-grafico-title">
+          <header class="discipline__head" data-reveal>
+            <h3 class="discipline__title" id="diseno-grafico-title">Diseño gráfico</h3>
+            <p class="discipline__desc">Identidad visual, piezas gráficas y comunicación de marca.</p>
+            <p class="discipline__meta" data-count="diseno-grafico">Próximamente</p>
+          </header>
+          <div class="works-grid" data-works="diseno-grafico" aria-busy="true" data-reveal>
+            <figure class="work work--skeleton">
+              <div class="card card--soft work__media"></div>
+              <figcaption class="work__caption"><span class="bar"></span><span class="bar bar--short"></span></figcaption>
+            </figure>
+            <figure class="work work--skeleton">
+              <div class="card card--strong work__media">
+                  <img class="card__mark logo--for-dark" src="./design-system/assets/logo/svg/icon-cream.svg" alt="" />
+                  <img class="card__mark logo--for-light" src="./design-system/assets/logo/svg/icon-black.svg" alt="" />
+                </div>
+              <figcaption class="work__caption"><span class="bar"></span><span class="bar bar--short"></span></figcaption>
+            </figure>
+            <figure class="work work--skeleton">
+              <div class="card card--outline work__media"></div>
+              <figcaption class="work__caption"><span class="bar"></span><span class="bar bar--short"></span></figcaption>
+            </figure>
+          </div>
+        </section>
 
-        <!-- TODO: reemplazar cada skeleton por la imagen real del proyecto. -->
-        <div class="bento" aria-busy="true">
-          <div class="card card--soft bento__cell bento__cell--a" aria-label="Proyecto próximamente" data-reveal>
-            <div class="card__inner"><span class="bar"></span><span class="bar bar--short"></span></div>
+        <section class="discipline" id="diseno-3d" aria-labelledby="diseno-3d-title">
+          <header class="discipline__head" data-reveal>
+            <h3 class="discipline__title" id="diseno-3d-title">Diseño 3D</h3>
+            <p class="discipline__desc">Personajes y escenas modelados en 3D.</p>
+            <p class="discipline__meta" data-count="diseno-3d">Próximamente</p>
+          </header>
+          <div class="works-grid" data-works="diseno-3d" aria-busy="true" data-reveal>
+            <figure class="work work--skeleton">
+              <div class="card card--strong work__media">
+                  <img class="card__mark logo--for-dark" src="./design-system/assets/logo/svg/icon-cream.svg" alt="" />
+                  <img class="card__mark logo--for-light" src="./design-system/assets/logo/svg/icon-black.svg" alt="" />
+                </div>
+              <figcaption class="work__caption"><span class="bar"></span><span class="bar bar--short"></span></figcaption>
+            </figure>
+            <figure class="work work--skeleton">
+              <div class="card card--outline work__media"></div>
+              <figcaption class="work__caption"><span class="bar"></span><span class="bar bar--short"></span></figcaption>
+            </figure>
+            <figure class="work work--skeleton">
+              <div class="card card--soft work__media"></div>
+              <figcaption class="work__caption"><span class="bar"></span><span class="bar bar--short"></span></figcaption>
+            </figure>
           </div>
-          <div class="card card--strong bento__cell bento__cell--b" aria-label="Proyecto próximamente" data-reveal>
-            <div class="card__inner card__inner--mark">
-              <img class="card__mark logo--for-dark" src="./design-system/assets/logo/svg/icon-cream.svg" alt="" />
-              <img class="card__mark logo--for-light" src="./design-system/assets/logo/svg/icon-black.svg" alt="" />
-            </div>
+        </section>
+
+        <section class="discipline" id="ilustracion" aria-labelledby="ilustracion-title">
+          <header class="discipline__head" data-reveal>
+            <h3 class="discipline__title" id="ilustracion-title">Ilustración</h3>
+            <p class="discipline__desc">Personajes e ilustraciones con estilo propio.</p>
+            <p class="discipline__meta" data-count="ilustracion">Próximamente</p>
+          </header>
+          <div class="works-grid" data-works="ilustracion" aria-busy="true" data-reveal>
+            <figure class="work work--skeleton">
+              <div class="card card--outline work__media"></div>
+              <figcaption class="work__caption"><span class="bar"></span><span class="bar bar--short"></span></figcaption>
+            </figure>
+            <figure class="work work--skeleton">
+              <div class="card card--soft work__media"></div>
+              <figcaption class="work__caption"><span class="bar"></span><span class="bar bar--short"></span></figcaption>
+            </figure>
+            <figure class="work work--skeleton">
+              <div class="card card--strong work__media">
+                  <img class="card__mark logo--for-dark" src="./design-system/assets/logo/svg/icon-cream.svg" alt="" />
+                  <img class="card__mark logo--for-light" src="./design-system/assets/logo/svg/icon-black.svg" alt="" />
+                </div>
+              <figcaption class="work__caption"><span class="bar"></span><span class="bar bar--short"></span></figcaption>
+            </figure>
           </div>
-          <div class="card card--outline bento__cell bento__cell--c" aria-label="Proyecto próximamente" data-reveal>
-            <div class="card__inner"><span class="bar"></span><span class="bar bar--short"></span></div>
-          </div>
-          <div class="card card--soft bento__cell bento__cell--d" aria-label="Proyecto próximamente" data-reveal>
-            <div class="card__inner"><span class="bar"></span><span class="bar bar--short"></span></div>
-          </div>
-          <div class="card card--outline bento__cell bento__cell--e" aria-label="Proyecto próximamente" data-reveal>
-            <div class="card__inner"><span class="bar"></span><span class="bar bar--short"></span></div>
-          </div>
-          <div class="card card--soft bento__cell bento__cell--f" aria-label="Proyecto próximamente" data-reveal>
-            <div class="card__inner"><span class="bar"></span><span class="bar bar--short"></span></div>
-          </div>
-        </div>
+        </section>
+
       </section>
 
       <section class="contact surface-invert" id="contacto" aria-labelledby="contact-title">

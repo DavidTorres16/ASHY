@@ -1,13 +1,20 @@
 import themeIcon from '@phosphor-icons/core/assets/regular/circle-half.svg?raw';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { disciplines } from './works/works.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const root = document.documentElement;
+const workImages = import.meta.glob('./works/images/*/*.{jpg,jpeg,png,webp,avif}', {
+  eager: true,
+  import: 'default',
+});
 
 setupTheme();
 setupYear();
+renderWorks();
+setupDisciplineNav();
 const contactWord = setupContactWord();
 setupMotion(contactWord);
 window.__ashyMotionReady = true;
@@ -97,17 +104,6 @@ function setupMotion(contactWord) {
         ),
     });
 
-    // Featured cards arrive more tilted and settle onto the table as the row scrolls in.
-    gsap.fromTo(
-      '.featured__row',
-      { '--tilt': 2.4 },
-      {
-        '--tilt': 1,
-        ease: 'none',
-        scrollTrigger: { trigger: '.featured__row', start: 'top bottom', end: 'center center', scrub: true },
-      },
-    );
-
     // Closing word rises letter by letter once, as the last beat of the page.
     gsap.from(contactWord.querySelectorAll('.char'), {
       yPercent: 110,
@@ -117,4 +113,72 @@ function setupMotion(contactWord) {
       scrollTrigger: { trigger: '.contact', start: 'top 75%', once: true },
     });
   });
+}
+
+// Each discipline keeps its skeletons until works.js lists at least one work for it.
+function renderWorks() {
+  for (const discipline of disciplines) {
+    const section = document.getElementById(discipline.id);
+    section.querySelector('.discipline__title').textContent = discipline.name;
+    section.querySelector('.discipline__desc').textContent = discipline.description;
+
+    const works = discipline.works
+      .map((work) => ({ ...work, src: workImages[`./works/images/${discipline.id}/${work.image}`] }))
+      .filter((work) => {
+        if (!work.src) console.warn(`[works] No existe images/${discipline.id}/${work.image} (${work.title}).`);
+        return work.src;
+      });
+    if (!works.length) continue;
+
+    section.querySelector('[data-count]').textContent =
+      works.length === 1 ? '1 proyecto' : `${works.length} proyectos`;
+
+    const grid = section.querySelector('[data-works]');
+    grid.innerHTML = works.map(workTemplate).join('');
+    grid.removeAttribute('aria-busy');
+
+    const deckMedia = document.querySelector(`[data-deck="${discipline.id}"] .deck__media`);
+    deckMedia.classList.remove('deck__media--mark');
+    deckMedia.innerHTML = `<img src="${works[0].src}" alt="" loading="eager" decoding="async" />`;
+  }
+}
+
+function workTemplate(work) {
+  const meta = [work.year, work.client].filter(Boolean).map(escapeHtml).join(' · ');
+  const body = `
+    <div class="card work__media">
+      <img src="${work.src}" alt="${escapeHtml(work.alt ?? '')}" loading="lazy" decoding="async" />
+    </div>
+    <figcaption class="work__caption">
+      <span class="work__title">${escapeHtml(work.title)}</span>
+      ${meta ? `<span class="work__meta">${meta}</span>` : ''}
+    </figcaption>`;
+  const content = work.link
+    ? `<a class="work__link" href="${escapeHtml(work.link)}" target="_blank" rel="noopener">${body}</a>`
+    : body;
+  return `<figure class="work">${content}</figure>`;
+}
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, (char) => `&#${char.charCodeAt(0)};`);
+}
+
+// Highlights the discipline currently in the reading zone of the viewport.
+function setupDisciplineNav() {
+  const links = new Map(
+    [...document.querySelectorAll('.discipline-nav__link')].map((link) => [link.hash.slice(1), link]),
+  );
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        links.forEach((link, id) => {
+          if (id === entry.target.id) link.setAttribute('aria-current', 'true');
+          else link.removeAttribute('aria-current');
+        });
+      }
+    },
+    { rootMargin: '-40% 0px -55% 0px' },
+  );
+  document.querySelectorAll('.discipline').forEach((section) => observer.observe(section));
 }
