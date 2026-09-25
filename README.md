@@ -19,12 +19,24 @@ animaciones ni el ícono del botón de tema: el navegador no ejecuta módulos Ja
   Para subir uno, ver [`src/works/README.md`](src/works/README.md).
 - `design-system/`: tokens, libro de marca y assets (logo y ornamentos) que usa la página.
 
-## Publicación (GitHub Pages)
+## Flujo de ramas y publicación (GitHub Pages)
 
-`.github/workflows/deploy-pages.yml` compila el sitio y publica `dist/` en cada push a `main`
-(también se puede lanzar a mano desde la pestaña Actions). URL: https://davidtorres16.github.io/ASHY/
+| Rama | Para qué | URL |
+|---|---|---|
+| `main` | Versión oficial | https://davidtorres16.github.io/ASHY/ |
+| `develop` | Vista previa de cambios (no se indexa en buscadores) | https://davidtorres16.github.io/ASHY/develop/ |
 
-Requisito único: en Settings → Pages → Build and deployment, elegir **Source: GitHub Actions**.
+1. Los cambios nuevos se hacen en una rama aparte y entran a `develop` por pull request.
+2. Se revisan en la URL de `develop`.
+3. Cuando están aprobados, un pull request de `develop` a `main` los vuelve oficiales.
+
+`.github/workflows/deploy-pages.yml` se ejecuta en cada push a `main` o `develop` (o a mano desde
+Actions). Como GitHub Pages admite un solo sitio por repositorio, cada ejecución compila las dos
+ramas y publica ambas juntas: un cambio en `develop` nunca altera la versión oficial.
+
+Configuración necesaria en GitHub (una sola vez):
+- Settings → Pages → Build and deployment: **Source: GitHub Actions**.
+- Settings → Environments → `github-pages` → Deployment branches and tags: permitir `main` y `develop`.
 
 ## Pendientes
 
