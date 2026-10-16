@@ -363,16 +363,18 @@ ul {
 }
 
 /* Hero */
+/* One centered column at every size, logo first: the same reading order as on mobile. */
 .hero {
-  --card: min(22svh, 17vw, 230px);
-  display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  --card: min(20svh, 17vw, 200px);
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: clamp(var(--space-5), 5vw, calc(var(--space-6) * 1.5));
+  justify-content: center;
+  gap: var(--space-4);
   max-width: 1280px;
   min-height: 100dvh;
   margin: 0 auto;
-  padding: var(--space-6) var(--space-5);
+  padding: var(--space-6) var(--space-5) var(--space-5);
 }
 
 .hero__brand {
@@ -382,7 +384,7 @@ ul {
 
 .hero__logo {
   width: auto;
-  height: min(68svh, 620px);
+  height: min(32svh, 320px);
 }
 
 .hero__content {
@@ -421,7 +423,7 @@ ul {
   color: var(--fg);
   text-align: left;
   text-decoration: none;
-  transform: translateX(calc(var(--x) * var(--fan) * var(--card) * 0.72))
+  transform: translateX(calc(var(--x) * var(--fan) * var(--card) * 0.82))
     translateY(calc(var(--y) * var(--fan) + var(--drop, 0px) + var(--lift, 0px)))
     rotate(calc(var(--r) * var(--fan) * 1deg));
   transition: transform 0.35s var(--ease-out), background-color 0.35s var(--ease-out), filter 0.5s var(--ease-out);
@@ -923,9 +925,6 @@ ul {
 
   .hero {
     --card: min(20svh, 34vw);
-    grid-template-columns: minmax(0, 1fr);
-    align-content: center;
-    gap: var(--space-4);
     padding: calc(var(--space-6) + var(--space-3)) var(--space-3) var(--space-5);
   }
 
