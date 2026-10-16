@@ -6,7 +6,7 @@
     <title>Ashley Taborda · Ashy</title>
     <meta
       name="description"
-      content="Ashley Taborda (@Ashy), diseñadora gráfica, artista 3D e ilustradora."
+      content="Ashley Taborda (Ashy), diseñadora gráfica, artista 3D e ilustradora."
     />
     <link rel="icon" type="image/svg+xml" href="./design-system/assets/logo/svg/icon-black.svg" />
     <meta name="theme-color" content="#f4efde" media="(prefers-color-scheme: light)" />
@@ -48,29 +48,32 @@
 
     <main id="contenido">
       <section class="hero" id="inicio" aria-labelledby="hero-title">
-        <p class="eyebrow hero__handle" data-hero>@Ashy</p>
-        <h1 class="hero__name" id="hero-title" data-hero>Ashley Taborda</h1>
+        <div class="hero__brand" data-hero>
+          <img class="hero__logo logo--for-light" src="./design-system/assets/logo/svg/logo-lockup-black.svg" alt="Ashy" />
+          <img class="hero__logo logo--for-dark" src="./design-system/assets/logo/svg/logo-lockup-cream.svg" alt="Ashy" />
+        </div>
 
-        <nav class="deck" aria-label="Disciplinas">
-          <a class="card card--soft deck__card" href="#diseno-grafico" data-deck="diseno-grafico" style="--x: -1; --r: -8; --y: 16px">
-            <span class="deck__media"></span>
-            <span class="deck__label"><span class="long">Diseño gráfico</span><span class="short">Gráfico</span></span>
-          </a>
-          <a class="card card--strong deck__card" href="#diseno-3d" data-deck="diseno-3d" style="--x: 0; --r: -1; --y: -8px">
-            <span class="deck__media deck__media--mark">
-              <img class="card__mark logo--for-dark" src="./design-system/assets/logo/svg/icon-cream.svg" alt="" />
-              <img class="card__mark logo--for-light" src="./design-system/assets/logo/svg/icon-black.svg" alt="" />
-            </span>
-            <span class="deck__label"><span class="long">Diseño 3D</span><span class="short">3D</span></span>
-          </a>
-          <a class="card card--outline deck__card" href="#ilustracion" data-deck="ilustracion" style="--x: 1; --r: 7; --y: 12px">
-            <span class="deck__media"></span>
-            <span class="deck__label"><span class="long">Ilustración</span><span class="short">Ilustración</span></span>
-          </a>
-        </nav>
+        <div class="hero__content">
+          <h1 class="hero__name" id="hero-title" data-hero>Ashley Taborda</h1>
+          <p class="hero__role" data-hero>Diseñadora gráfica, artista 3D e ilustradora</p>
 
-        <p class="hero__role" data-hero>Diseñadora gráfica, artista 3D e ilustradora</p>
-        <a class="btn hero__cta" href="#destacado" data-hero>Ver trabajo</a>
+          <nav class="deck" aria-label="Disciplinas">
+            <a class="card card--soft deck__card unlock" href="#diseno-grafico" data-deck="diseno-grafico" style="--x: -1; --r: -8; --y: 14px">
+              <span class="deck__media"></span>
+              <span class="deck__label"><span class="long">Diseño gráfico</span><span class="short">Gráfico</span></span>
+            </a>
+            <a class="card card--strong deck__card unlock" href="#diseno-3d" data-deck="diseno-3d" style="--x: 0; --r: -1; --y: -6px">
+              <span class="deck__media"></span>
+              <span class="deck__label"><span class="long">Diseño 3D</span><span class="short">3D</span></span>
+            </a>
+            <a class="card card--outline deck__card unlock" href="#ilustracion" data-deck="ilustracion" style="--x: 1; --r: 7; --y: 10px">
+              <span class="deck__media"></span>
+              <span class="deck__label"><span class="long">Ilustración</span><span class="short">Ilustración</span></span>
+            </a>
+          </nav>
+
+          <a class="btn hero__cta" href="#destacado" data-hero>Ver trabajo</a>
+        </div>
       </section>
 
       <section class="about" aria-labelledby="about-title">
@@ -107,7 +110,7 @@
         <!-- Se llena con los trabajos marcados con featured: true en src/works/works.js. -->
         <div class="featured__row" data-featured aria-busy="true">
           <figure class="featured__item" style="--r: -5">
-            <div class="card card--strong featured__card" aria-label="Proyecto próximamente">
+            <div class="card card--strong featured__card unlock" aria-label="Proyecto próximamente">
               <div class="card__inner card__inner--mark">
                 <img class="card__mark logo--for-dark" src="./design-system/assets/logo/svg/icon-cream.svg" alt="" />
                 <img class="card__mark logo--for-light" src="./design-system/assets/logo/svg/icon-black.svg" alt="" />
@@ -116,13 +119,13 @@
             <figcaption class="pill"><span class="bar"></span></figcaption>
           </figure>
           <figure class="featured__item" style="--r: 2">
-            <div class="card card--soft featured__card" aria-label="Proyecto próximamente">
+            <div class="card card--soft featured__card unlock" aria-label="Proyecto próximamente">
               <div class="card__inner"><span class="bar"></span><span class="bar bar--short"></span></div>
             </div>
             <figcaption class="pill"><span class="bar"></span></figcaption>
           </figure>
           <figure class="featured__item" style="--r: 6">
-            <div class="card card--outline featured__card" aria-label="Proyecto próximamente">
+            <div class="card card--outline featured__card unlock" aria-label="Proyecto próximamente">
               <div class="card__inner"><span class="bar"></span><span class="bar bar--short"></span></div>
             </div>
             <figcaption class="pill"><span class="bar"></span></figcaption>
@@ -151,18 +154,18 @@
           </header>
           <div class="works-grid" data-works="diseno-grafico" aria-busy="true" data-reveal>
             <figure class="work work--skeleton">
-              <div class="card card--soft work__media"></div>
+              <div class="card card--soft work__media unlock"></div>
               <figcaption class="work__caption"><span class="bar"></span><span class="bar bar--short"></span></figcaption>
             </figure>
             <figure class="work work--skeleton">
-              <div class="card card--strong work__media">
+              <div class="card card--strong work__media unlock">
                   <img class="card__mark logo--for-dark" src="./design-system/assets/logo/svg/icon-cream.svg" alt="" />
                   <img class="card__mark logo--for-light" src="./design-system/assets/logo/svg/icon-black.svg" alt="" />
                 </div>
               <figcaption class="work__caption"><span class="bar"></span><span class="bar bar--short"></span></figcaption>
             </figure>
             <figure class="work work--skeleton">
-              <div class="card card--outline work__media"></div>
+              <div class="card card--outline work__media unlock"></div>
               <figcaption class="work__caption"><span class="bar"></span><span class="bar bar--short"></span></figcaption>
             </figure>
           </div>
@@ -176,18 +179,18 @@
           </header>
           <div class="works-grid" data-works="diseno-3d" aria-busy="true" data-reveal>
             <figure class="work work--skeleton">
-              <div class="card card--strong work__media">
+              <div class="card card--strong work__media unlock">
                   <img class="card__mark logo--for-dark" src="./design-system/assets/logo/svg/icon-cream.svg" alt="" />
                   <img class="card__mark logo--for-light" src="./design-system/assets/logo/svg/icon-black.svg" alt="" />
                 </div>
               <figcaption class="work__caption"><span class="bar"></span><span class="bar bar--short"></span></figcaption>
             </figure>
             <figure class="work work--skeleton">
-              <div class="card card--outline work__media"></div>
+              <div class="card card--outline work__media unlock"></div>
               <figcaption class="work__caption"><span class="bar"></span><span class="bar bar--short"></span></figcaption>
             </figure>
             <figure class="work work--skeleton">
-              <div class="card card--soft work__media"></div>
+              <div class="card card--soft work__media unlock"></div>
               <figcaption class="work__caption"><span class="bar"></span><span class="bar bar--short"></span></figcaption>
             </figure>
           </div>
@@ -201,15 +204,15 @@
           </header>
           <div class="works-grid" data-works="ilustracion" aria-busy="true" data-reveal>
             <figure class="work work--skeleton">
-              <div class="card card--outline work__media"></div>
+              <div class="card card--outline work__media unlock"></div>
               <figcaption class="work__caption"><span class="bar"></span><span class="bar bar--short"></span></figcaption>
             </figure>
             <figure class="work work--skeleton">
-              <div class="card card--soft work__media"></div>
+              <div class="card card--soft work__media unlock"></div>
               <figcaption class="work__caption"><span class="bar"></span><span class="bar bar--short"></span></figcaption>
             </figure>
             <figure class="work work--skeleton">
-              <div class="card card--strong work__media">
+              <div class="card card--strong work__media unlock">
                   <img class="card__mark logo--for-dark" src="./design-system/assets/logo/svg/icon-cream.svg" alt="" />
                   <img class="card__mark logo--for-light" src="./design-system/assets/logo/svg/icon-black.svg" alt="" />
                 </div>
@@ -230,7 +233,6 @@
         </div>
 
         <div class="contact__body" data-reveal>
-          <p class="contact__handle">@Ashy</p>
           <!-- TODO: añadir el correo real de Ashley en el href (mailto:correo@dominio). -->
           <a class="btn btn--invert" href="mailto:">Escríbeme</a>
         </div>
