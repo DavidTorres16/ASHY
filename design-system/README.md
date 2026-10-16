@@ -44,6 +44,8 @@ Dos colores de marca — ver `tokens.json` para valores exactos (hex, RGB, CMYK,
 
 ### Tipografía
 
+> **Web:** por indicación de la cliente, en la página los títulos y textos que deben resaltar usan **Momo Trust Display** (Google Fonts, solo peso 400) en lugar de Thocant. Lo que sigue describe el manual original.
+
 - **Display — `Thocant`**: tipografía palo seco, geométrica y moderna, de trazos gruesos y formas redondeadas que transmiten solidez y cercanía. Combina simplicidad con un aire contemporáneo. En la marca Ashy refuerza la autenticidad, creatividad y la conexión directa con las personas. Se usa en los títulos grandes de cada sección del manual.
 - **Cuerpo — `Acumin Variable Concept`**: usada en dos pesos — *Bold (700)* para énfasis y datos técnicos, *WideExtraLight (200, ancho 115)* para párrafos de cuerpo.
 

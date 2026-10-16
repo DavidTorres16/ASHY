@@ -1,13 +1,24 @@
 import themeIcon from '@phosphor-icons/core/assets/regular/circle-half.svg?raw';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { disciplines } from './works/works.js';
+import iconBlack from '../design-system/assets/logo/svg/icon-black.svg';
+import iconCream from '../design-system/assets/logo/svg/icon-cream.svg';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const root = document.documentElement;
+const workImages = import.meta.glob('./works/images/*/*.{jpg,jpeg,png,webp,avif}', {
+  eager: true,
+  import: 'default',
+});
 
 setupTheme();
 setupYear();
+renderWorks();
+renderFeatured();
+setupUnlockOnTouch();
+setupDisciplineNav();
 const contactWord = setupContactWord();
 setupMotion(contactWord);
 window.__ashyMotionReady = true;
@@ -69,8 +80,8 @@ function setupMotion(contactWord) {
     // Hero: the name lands, then the project cards are dealt from a single stack.
     const intro = gsap.timeline({ defaults: { ease: 'power3.out' } });
     intro
-      .to('.hero__handle', { opacity: 1, duration: 0.5 })
-      .fromTo('.hero__name', { opacity: 0, yPercent: 30 }, { opacity: 1, yPercent: 0, duration: 0.9 }, '<0.1')
+      .fromTo('.hero__brand', { opacity: 0, scale: 0.92 }, { opacity: 1, scale: 1, duration: 1 })
+      .fromTo('.hero__name', { opacity: 0, yPercent: 30 }, { opacity: 1, yPercent: 0, duration: 0.8 }, '-=0.6')
       .fromTo(
         '.deck__card',
         { opacity: 0, '--drop': '48px' },
@@ -82,7 +93,7 @@ function setupMotion(contactWord) {
         '.hero__role, .hero__cta',
         { opacity: 0, y: 24 },
         { opacity: 1, y: 0, duration: 0.7, stagger: 0.1 },
-        '-=0.8',
+        '-=0.9',
       );
 
     // Sections enter in reading order as they reach the viewport.
@@ -117,4 +128,145 @@ function setupMotion(contactWord) {
       scrollTrigger: { trigger: '.contact', start: 'top 75%', once: true },
     });
   });
+}
+
+function worksOf(discipline) {
+  return discipline.works
+    .map((work) => ({ ...work, discipline, src: workImages[`./works/images/${discipline.id}/${work.image}`] }))
+    .filter((work) => {
+      if (!work.src) console.warn(`[works] No existe images/${discipline.id}/${work.image} (${work.title}).`);
+      return work.src;
+    });
+}
+
+// Each discipline keeps its skeletons until works.js lists at least one work for it.
+function renderWorks() {
+  disciplines.forEach((discipline, sectionIndex) => {
+    const section = document.getElementById(discipline.id);
+    section.querySelector('.discipline__title').textContent = discipline.name;
+    section.querySelector('.discipline__desc').textContent = discipline.description;
+
+    const works = worksOf(discipline);
+    if (!works.length) return;
+
+    section.querySelector('[data-count]').textContent =
+      works.length === 1 ? '1 proyecto' : `${works.length} proyectos`;
+
+    // Each block picks the layout for its size; the large slot alternates sides between blocks
+    // and between disciplines.
+    let start = 0;
+    const blocks = blockSizes(works.length).map((size, blockIndex) => {
+      const items = works.slice(start, (start += size));
+      const mirror = (sectionIndex + blockIndex) % 2 === 1 ? ' works-grid--mirror' : '';
+      const filler = size === 1 ? fillerTemplate() : '';
+      return `<div class="works-grid works-grid--p${size}${mirror}">${items.map(workTemplate).join('')}${filler}</div>`;
+    });
+
+    const stack = section.querySelector('[data-works]');
+    stack.innerHTML = blocks.join('');
+    stack.removeAttribute('aria-busy');
+
+    const deckMedia = document.querySelector(`[data-deck="${discipline.id}"] .deck__media`);
+    deckMedia.classList.remove('deck__media--mark');
+    deckMedia.innerHTML = `<img src="${works[0].src}" alt="" loading="eager" decoding="async" />`;
+  });
+}
+
+// Splits a work count into blocks of 3-6 so no block ever has a lone work (7 -> 4+3, 11 -> 4+4+3).
+function blockSizes(count) {
+  const sizes = [];
+  while (count > 6) {
+    const take = count - 4 >= 3 ? 4 : 3;
+    sizes.push(take);
+    count -= take;
+  }
+  sizes.push(count);
+  return sizes;
+}
+
+// Keeps a single work company so the block still closes as a full rectangle.
+function fillerTemplate() {
+  return `
+    <figure class="work work--filler" aria-hidden="true">
+      <div class="card card--strong work__media">
+        <img class="card__mark logo--for-dark" src="${iconCream}" alt="" />
+        <img class="card__mark logo--for-light" src="${iconBlack}" alt="" />
+      </div>
+      <figcaption class="work__caption"><span class="work__title">Más proyectos en camino</span></figcaption>
+    </figure>`;
+}
+
+// Up to three works flagged `featured: true`, from any discipline; empty slots stay as skeletons.
+function renderFeatured() {
+  const featured = disciplines.flatMap(worksOf).filter((work) => work.featured).slice(0, 3);
+  if (!featured.length) return;
+
+  const row = document.querySelector('[data-featured]');
+  const items = row.querySelectorAll('.featured__item');
+  featured.forEach((work, index) => {
+    const href = work.link ?? `#${work.discipline.id}`;
+    const external = work.link ? ' target="_blank" rel="noopener"' : '';
+    items[index].innerHTML = `
+      <a class="card featured__card unlock" href="${escapeHtml(href)}"${external}>
+        <img src="${work.src}" alt="${escapeHtml(work.alt ?? '')}" loading="lazy" decoding="async" />
+      </a>
+      <figcaption class="pill pill--text">${escapeHtml(work.title)}</figcaption>`;
+  });
+  if (featured.length === items.length) row.removeAttribute('aria-busy');
+}
+
+// Touch screens have no hover, so cards unlock once as they scroll into the middle of the view.
+function setupUnlockOnTouch() {
+  if (!window.matchMedia('(hover: none)').matches) return;
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        entry.target.classList.add('is-unlocked');
+        observer.unobserve(entry.target);
+      }
+    },
+    { rootMargin: '-30% 0px -30% 0px' },
+  );
+  document.querySelectorAll('.unlock').forEach((card) => observer.observe(card));
+}
+
+function workTemplate(work) {
+  const meta = [work.year, work.client].filter(Boolean).map(escapeHtml).join(' · ');
+  const body = `
+    <div class="card work__media unlock">
+      <img src="${work.src}" alt="${escapeHtml(work.alt ?? '')}" loading="lazy" decoding="async" />
+    </div>
+    <figcaption class="work__caption">
+      <span class="work__title">${escapeHtml(work.title)}</span>
+      ${meta ? `<span class="work__meta">${meta}</span>` : ''}
+    </figcaption>`;
+  const content = work.link
+    ? `<a class="work__link" href="${escapeHtml(work.link)}" target="_blank" rel="noopener">${body}</a>`
+    : body;
+  return `<figure class="work">${content}</figure>`;
+}
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, (char) => `&#${char.charCodeAt(0)};`);
+}
+
+// Highlights the discipline currently in the reading zone of the viewport.
+function setupDisciplineNav() {
+  const links = new Map(
+    [...document.querySelectorAll('.discipline-nav__link')].map((link) => [link.hash.slice(1), link]),
+  );
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        links.forEach((link, id) => {
+          if (id === entry.target.id) link.setAttribute('aria-current', 'true');
+          else link.removeAttribute('aria-current');
+        });
+      }
+    },
+    { rootMargin: '-40% 0px -55% 0px' },
+  );
+  document.querySelectorAll('.discipline').forEach((section) => observer.observe(section));
 }

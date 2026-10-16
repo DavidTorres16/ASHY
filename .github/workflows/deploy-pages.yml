@@ -1,8 +1,11 @@
 name: Deploy to GitHub Pages
 
+# Pages hosts a single site per repo, so every run publishes both branches together:
+#   main    -> https://<user>.github.io/ASHY/          (official)
+#   develop -> https://<user>.github.io/ASHY/develop/  (preview, noindex)
 on:
   push:
-    branches: [main]
+    branches: [main, develop]
   workflow_dispatch:
 
 permissions:
@@ -19,21 +22,57 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
+          path: main
+
+      - id: develop
+        run: |
+          if git ls-remote --exit-code --heads "https://github.com/${GITHUB_REPOSITORY}.git" develop > /dev/null; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - if: steps.develop.outputs.exists == 'true'
+        uses: actions/checkout@v4
+        with:
+          ref: develop
+          path: develop
 
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: main/package-lock.json
 
-      - run: npm ci
+      - name: Build main
+        working-directory: main
+        run: npm ci && npm run build
 
-      - run: npm run build
+      - name: Build develop
+        if: steps.develop.outputs.exists == 'true'
+        working-directory: develop
+        run: npm ci && npm run build
+
+      - name: Assemble site
+        run: |
+          mkdir site
+          cp -r main/dist/. site/
+          if [ -d develop/dist ]; then
+            mkdir site/develop
+            cp -r develop/dist/. site/develop/
+            sed -i \
+              -e 's|<head>|<head>\n    <meta name="robots" content="noindex" />|' \
+              -e 's|<title>|<title>[develop] |' \
+              site/develop/index.html
+          fi
 
       - uses: actions/configure-pages@v5
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: site
 
   deploy:
     needs: build
