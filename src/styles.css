@@ -1,9 +1,10 @@
-@import "@fontsource-variable/fredoka";
+@import "@fontsource/momo-trust-display/400.css";
 @import "@fontsource-variable/archivo/wdth.css";
 
-/* Values come from design-system/tokens.json. Thocant and Acumin are listed first; the brand
-   files are not in the repo yet, so Fredoka (rounded, heavy) and Archivo (grotesque with a
-   width axis for WideExtraLight) render in their place until design-system/fonts/ exists. */
+/* Display type is Momo Trust Display, chosen by the client for large and highlighted text; it ships
+   a single 400 weight, so display rules use 400 and font synthesis is off (no faux bold).
+   Body stays Acumin Variable Concept; until its files are in the repo, Archivo (grotesque with a
+   width axis for WideExtraLight) renders in its place. */
 
 :root {
   --ink: #141414;
@@ -11,7 +12,7 @@
   --gold: #efe2c4;
   --charcoal: #3c3c37;
 
-  --font-display: "Thocant", "Fredoka Variable", ui-rounded, "SF Pro Rounded", sans-serif;
+  --font-display: "Momo Trust Display", ui-rounded, sans-serif;
   --font-body: "Acumin Variable Concept", "Acumin Pro", "Archivo Variable", system-ui, sans-serif;
 
   --space-1: 4px;
@@ -102,6 +103,7 @@ body {
   font-stretch: 115%;
   overflow-x: clip;
   -webkit-font-smoothing: antialiased;
+  font-synthesis: none;
   transition: background-color 0.35s var(--ease-out), color 0.35s var(--ease-out);
 }
 
@@ -292,31 +294,109 @@ ul {
   }
 }
 
+/* Character unlock: cards sit in grayscale and fill with color, with a glint and a small pop. */
+.unlock {
+  overflow: hidden;
+  filter: grayscale(1);
+  transition: filter 0.5s var(--ease-out), transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out);
+}
+
+.unlock::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(110deg, transparent 35%, rgb(244 239 222 / 0.55) 50%, transparent 65%);
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+
+.unlock.is-unlocked {
+  filter: none;
+}
+
+@media (hover: hover) {
+  .unlock:hover,
+  .unlock:focus-visible,
+  .featured__item:hover .unlock,
+  .work:hover .unlock {
+    filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .unlock.is-unlocked {
+    animation: unlock-pop 0.55s var(--ease-out);
+  }
+
+  .unlock.is-unlocked::after {
+    transform: translateX(120%);
+    transition: transform 0.9s var(--ease-out);
+  }
+
+  @media (hover: hover) {
+    .unlock:hover,
+    .unlock:focus-visible,
+    .featured__item:hover .unlock,
+    .work:hover .unlock {
+      animation: unlock-pop 0.55s var(--ease-out);
+    }
+
+    .unlock:hover::after,
+    .unlock:focus-visible::after,
+    .featured__item:hover .unlock::after,
+    .work:hover .unlock::after {
+      transform: translateX(120%);
+      transition: transform 0.9s var(--ease-out);
+    }
+  }
+}
+
+@keyframes unlock-pop {
+  40% {
+    scale: 1.04;
+  }
+
+  100% {
+    scale: 1;
+  }
+}
+
 /* Hero */
 .hero {
-  position: relative;
+  --card: min(22svh, 17vw, 230px);
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  align-items: center;
+  gap: clamp(var(--space-5), 5vw, calc(var(--space-6) * 1.5));
+  max-width: 1280px;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-5);
+}
+
+.hero__brand {
+  display: flex;
+  justify-content: center;
+}
+
+.hero__logo {
+  width: auto;
+  height: min(68svh, 620px);
+}
+
+.hero__content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  --card: min(26svh, 40vw, 300px);
-  justify-content: center;
-  min-height: 100dvh;
-  padding: var(--space-6) var(--space-3) var(--space-5);
   text-align: center;
-}
-
-.hero__handle {
-  margin-bottom: var(--space-3);
 }
 
 .hero__name {
   font-family: var(--font-display);
-  font-size: clamp(3rem, 9vw, 9rem);
-  line-height: 0.92;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: -0.01em;
-  text-wrap: balance;
+  font-size: clamp(2rem, 3.6vw, 3.25rem);
+  line-height: 1.05;
+  font-weight: 400;
 }
 
 .deck {
@@ -325,7 +405,7 @@ ul {
   z-index: 2;
   width: 100%;
   height: calc(var(--card) * 1.12);
-  margin-top: clamp(var(--space-4), 4svh, var(--space-5));
+  margin-top: var(--space-5);
 }
 
 .deck__card {
@@ -344,7 +424,7 @@ ul {
   transform: translateX(calc(var(--x) * var(--fan) * var(--card) * 0.72))
     translateY(calc(var(--y) * var(--fan) + var(--drop, 0px) + var(--lift, 0px)))
     rotate(calc(var(--r) * var(--fan) * 1deg));
-  transition: transform 0.35s var(--ease-out), background-color 0.35s var(--ease-out);
+  transition: transform 0.35s var(--ease-out), background-color 0.35s var(--ease-out), filter 0.5s var(--ease-out);
 }
 
 .deck__card:hover,
@@ -382,17 +462,12 @@ ul {
 }
 
 .hero__role {
-  position: relative;
-  z-index: 1;
-  max-width: 16ch;
-  margin-top: calc(var(--card) * -0.1);
+  max-width: 24ch;
+  margin-top: var(--space-2);
   font-family: var(--font-display);
-  font-size: clamp(2rem, 6.2vw, 6rem);
-  line-height: 0.95;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: transparent;
-  -webkit-text-stroke: clamp(1.25px, 0.14vw, 2px) var(--fg);
+  font-size: clamp(1.125rem, 1.8vw, 1.5rem);
+  line-height: 1.25;
+  font-weight: 400;
   text-wrap: balance;
 }
 
@@ -420,7 +495,7 @@ ul {
   font-family: var(--font-display);
   font-size: 44px;
   line-height: 48px;
-  font-weight: 700;
+  font-weight: 400;
   text-align: center;
   text-wrap: balance;
 }
@@ -454,7 +529,7 @@ ul {
   font-family: var(--font-display);
   font-size: 44px;
   line-height: 48px;
-  font-weight: 700;
+  font-weight: 400;
 }
 
 .value__text {
@@ -474,7 +549,7 @@ ul {
   font-family: var(--font-display);
   font-size: 44px;
   line-height: 48px;
-  font-weight: 700;
+  font-weight: 400;
   text-transform: uppercase;
 }
 
@@ -505,7 +580,7 @@ ul {
   aspect-ratio: 4 / 5;
   overflow: hidden;
   transform: rotate(calc(var(--r) * var(--tilt) * 1deg));
-  transition: transform 0.45s var(--ease-out);
+  transition: transform 0.45s var(--ease-out), filter 0.5s var(--ease-out);
 }
 
 .featured__card img:not(.card__mark) {
@@ -740,7 +815,7 @@ ul {
   font-family: var(--font-display);
   font-size: 18vw;
   line-height: 0.9;
-  font-weight: 700;
+  font-weight: 400;
   text-align: center;
   text-transform: uppercase;
   white-space: nowrap;
@@ -754,13 +829,6 @@ ul {
   display: grid;
   justify-items: center;
   gap: var(--space-4);
-}
-
-.contact__handle {
-  font-family: var(--font-display);
-  font-size: 44px;
-  line-height: 48px;
-  font-weight: 700;
 }
 
 .footer {
@@ -849,15 +917,19 @@ ul {
   }
 
   .hero {
-    padding-top: calc(var(--space-6) + var(--space-3));
+    --card: min(20svh, 34vw);
+    grid-template-columns: minmax(0, 1fr);
+    align-content: center;
+    gap: var(--space-4);
+    padding: calc(var(--space-6) + var(--space-3)) var(--space-3) var(--space-5);
   }
 
-  .hero__role {
+  .hero__logo {
+    height: min(30svh, 260px);
+  }
+
+  .deck {
     margin-top: var(--space-4);
-  }
-
-  .hero {
-    --card: min(24svh, 38vw);
   }
 
   .deck__card {

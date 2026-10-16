@@ -15,6 +15,7 @@ setupTheme();
 setupYear();
 renderWorks();
 renderFeatured();
+setupUnlockOnTouch();
 setupDisciplineNav();
 const contactWord = setupContactWord();
 setupMotion(contactWord);
@@ -77,8 +78,8 @@ function setupMotion(contactWord) {
     // Hero: the name lands, then the project cards are dealt from a single stack.
     const intro = gsap.timeline({ defaults: { ease: 'power3.out' } });
     intro
-      .to('.hero__handle', { opacity: 1, duration: 0.5 })
-      .fromTo('.hero__name', { opacity: 0, yPercent: 30 }, { opacity: 1, yPercent: 0, duration: 0.9 }, '<0.1')
+      .fromTo('.hero__brand', { opacity: 0, scale: 0.92 }, { opacity: 1, scale: 1, duration: 1 })
+      .fromTo('.hero__name', { opacity: 0, yPercent: 30 }, { opacity: 1, yPercent: 0, duration: 0.8 }, '-=0.6')
       .fromTo(
         '.deck__card',
         { opacity: 0, '--drop': '48px' },
@@ -90,7 +91,7 @@ function setupMotion(contactWord) {
         '.hero__role, .hero__cta',
         { opacity: 0, y: 24 },
         { opacity: 1, y: 0, duration: 0.7, stagger: 0.1 },
-        '-=0.8',
+        '-=0.9',
       );
 
     // Sections enter in reading order as they reach the viewport.
@@ -170,7 +171,7 @@ function renderFeatured() {
     const href = work.link ?? `#${work.discipline.id}`;
     const external = work.link ? ' target="_blank" rel="noopener"' : '';
     items[index].innerHTML = `
-      <a class="card featured__card" href="${escapeHtml(href)}"${external}>
+      <a class="card featured__card unlock" href="${escapeHtml(href)}"${external}>
         <img src="${work.src}" alt="${escapeHtml(work.alt ?? '')}" loading="lazy" decoding="async" />
       </a>
       <figcaption class="pill pill--text">${escapeHtml(work.title)}</figcaption>`;
@@ -178,10 +179,26 @@ function renderFeatured() {
   if (featured.length === items.length) row.removeAttribute('aria-busy');
 }
 
+// Touch screens have no hover, so cards unlock once as they scroll into the middle of the view.
+function setupUnlockOnTouch() {
+  if (!window.matchMedia('(hover: none)').matches) return;
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        entry.target.classList.add('is-unlocked');
+        observer.unobserve(entry.target);
+      }
+    },
+    { rootMargin: '-30% 0px -30% 0px' },
+  );
+  document.querySelectorAll('.unlock').forEach((card) => observer.observe(card));
+}
+
 function workTemplate(work) {
   const meta = [work.year, work.client].filter(Boolean).map(escapeHtml).join(' · ');
   const body = `
-    <div class="card work__media">
+    <div class="card work__media unlock">
       <img src="${work.src}" alt="${escapeHtml(work.alt ?? '')}" loading="lazy" decoding="async" />
     </div>
     <figcaption class="work__caption">

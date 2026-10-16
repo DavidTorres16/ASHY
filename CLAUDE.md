@@ -4,7 +4,9 @@ Antes de escribir CSS, HTML o cualquier componente de UI, lee
 valores exactos — nunca inventes ni aproximes colores o tipografía:
 
 - Color primario: #141414 (ink) · Color secundario: #f4efde (cream)
-- Tipografía display: Thocant · Tipografía de cuerpo: Acumin Variable Concept
+- Tipografía display (títulos y textos que deben resaltar): Momo Trust Display, solo peso 400,
+  elegida por la cliente para la web en lugar de Thocant · Tipografía de cuerpo: Acumin Variable Concept
+- Nada de texto en contorno (outline/stroke): la cliente pidió no usar tipografías con líneas.
 - Logo: usar los archivos en `design-system/assets/logo/svg/` tal cual, nunca
   recolorear, distorsionar ni reposicionar el ícono respecto al wordmark.
 
