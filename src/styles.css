@@ -509,23 +509,33 @@ ul {
   opacity: var(--ornament-opacity);
 }
 
+/* A staircase across the same three columns as the works grid: left, center, right. */
 .values {
   display: grid;
-  gap: var(--space-5);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-5) var(--space-4);
 }
 
 .value {
   display: grid;
   gap: var(--space-2);
-  max-width: 34rem;
+}
+
+.value:nth-child(1) {
+  grid-column: 1;
+  grid-row: 1;
 }
 
 .value:nth-child(2) {
-  margin-left: 18%;
+  grid-column: 2;
+  grid-row: 2;
+  text-align: center;
 }
 
 .value:nth-child(3) {
-  margin-left: 36%;
+  grid-column: 3;
+  grid-row: 3;
+  text-align: right;
 }
 
 .value__name {
@@ -536,7 +546,8 @@ ul {
 }
 
 .value__text {
-  max-width: 65ch;
+  font-size: 18px;
+  line-height: 28px;
 }
 
 /* Section headings */
@@ -965,8 +976,14 @@ ul {
     width: 48px;
   }
 
+  .values {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .value:nth-child(n) {
-    margin-left: 0;
+    grid-column: 1;
+    grid-row: auto;
+    text-align: center;
   }
 
   .value__name {
