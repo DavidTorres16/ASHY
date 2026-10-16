@@ -30,7 +30,32 @@ export const disciplines = [
     name: 'Diseño 3D',
     shortName: '3D',
     description: 'Personajes y escenas modelados en 3D.',
-    works: [],
+    // Assets de prueba entregados para exponer el portafolio; títulos provisionales.
+    works: [
+      {
+        title: 'Latrodectus mactans',
+        image: 'latrodectus-mactans.webp',
+        alt: 'Criatura 3D mitad mujer y mitad araña viuda negra, de piel rojiza y seis patas, sobre fondo oscuro con telarañas',
+        featured: true,
+      },
+      {
+        title: 'La chica del gato',
+        image: 'chica-del-gato.webp',
+        alt: 'Personaje 3D de cabello largo bicolor que sostiene un gato negro de ojos ámbar',
+        featured: true,
+      },
+      {
+        title: 'Retrato élfico',
+        image: 'retrato-elfico.webp',
+        alt: 'Busto 3D de una chica de orejas puntiagudas, cabello negro largo y ojos azules',
+      },
+      {
+        title: 'Zoro (fan art)',
+        image: 'zoro-fan-art.webp',
+        alt: 'Personaje 3D de cabello verde y torso descubierto, con faja morada, falda blanca y tres katanas',
+        featured: true,
+      },
+    ],
   },
   {
     id: 'ilustracion',
