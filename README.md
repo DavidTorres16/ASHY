@@ -40,7 +40,7 @@ Configuración necesaria en GitHub (una sola vez):
 
 ## Pendientes
 
-- Trabajos: ninguna disciplina tiene trabajos todavía, así que se ven skeletons. Se suben en `src/works/`.
+- Trabajos: Diseño 3D tiene 4 renders de prueba (títulos provisionales en `src/works/works.js`); Diseño gráfico e Ilustración siguen con skeletons. Se suben en `src/works/`.
 - Descripciones de cada disciplina en `src/works/works.js`: son una propuesta, confirmar con Ashley.
 - Correo de contacto: el botón "Escríbeme" tiene un `mailto:` vacío.
 - Fuente de cuerpo Acumin Variable Concept: mientras no esté en `design-system/fonts/`, se usa Archivo como sustituta. Los títulos usan Momo Trust Display (elegida por la cliente).

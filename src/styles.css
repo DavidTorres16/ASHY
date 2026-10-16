@@ -450,6 +450,7 @@ ul {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: 50% 25%;
 }
 
 .deck__label {
@@ -691,12 +692,42 @@ ul {
   font-stretch: 100%;
 }
 
-/* Same template in every discipline: the first work leads at double size, the rest follow. */
-.works-grid {
+/* Same template in every discipline. The layout depends on how many works there are, and every
+   block closes a full rectangle: no work is ever left alone on a row. Works beyond 6 are split
+   into blocks of 3-6 (see renderWorks). The first slot, "a", is always the large one. */
+.works-stack {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-4);
 }
+
+.works-grid {
+  --row: clamp(220px, 28vw, 420px);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(2, var(--row));
+  gap: var(--space-4);
+}
+
+.works-grid > :nth-child(1) { grid-area: a; }
+.works-grid > :nth-child(2) { grid-area: b; }
+.works-grid > :nth-child(3) { grid-area: c; }
+.works-grid > :nth-child(4) { grid-area: d; }
+.works-grid > :nth-child(5) { grid-area: e; }
+.works-grid > :nth-child(6) { grid-area: f; }
+
+.works-grid--p1 { grid-template-areas: "a a b" "a a b"; }
+.works-grid--p2 { grid-template-areas: "a a b" "a a b"; }
+.works-grid--p3 { grid-template-areas: "a a b" "a a c"; }
+.works-grid--p4 { grid-template-areas: "a b c" "a b d"; }
+.works-grid--p5 { grid-template-areas: "a b c" "a d e"; }
+.works-grid--p6 { grid-template-areas: "a a b" "a a c" "d e f"; grid-template-rows: repeat(3, var(--row)); }
+
+.works-grid--mirror.works-grid--p1 { grid-template-areas: "b a a" "b a a"; }
+.works-grid--mirror.works-grid--p2 { grid-template-areas: "b a a" "b a a"; }
+.works-grid--mirror.works-grid--p3 { grid-template-areas: "b a a" "c a a"; }
+.works-grid--mirror.works-grid--p4 { grid-template-areas: "c b a" "d b a"; }
+.works-grid--mirror.works-grid--p5 { grid-template-areas: "c b a" "e d a"; }
+.works-grid--mirror.works-grid--p6 { grid-template-areas: "b a a" "c a a" "f e d"; }
 
 .work {
   display: flex;
@@ -717,8 +748,9 @@ ul {
 .work__media {
   position: relative;
   display: grid;
+  flex: 1;
   place-items: center;
-  aspect-ratio: 1 / 1;
+  min-height: 0;
   overflow: hidden;
 }
 
@@ -728,30 +760,12 @@ ul {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: 50% 25%;
   transition: transform 0.6s var(--ease-out);
 }
 
 .work__link:hover .work__media img {
   transform: scale(1.03);
-}
-
-/* The lead is wide; with 3+ works it also spans two rows and fills them. */
-.work:first-child {
-  grid-column: span 2;
-}
-
-.work:first-child .work__media {
-  aspect-ratio: 16 / 10;
-}
-
-.work:first-child:nth-last-child(n + 3) {
-  grid-row: span 2;
-}
-
-.work:first-child:nth-last-child(n + 3) .work__media {
-  flex: 1;
-  min-height: 0;
-  aspect-ratio: auto;
 }
 
 .work__caption {
@@ -884,16 +898,7 @@ ul {
 
 @media (max-width: 1023px) {
   .works-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .work:first-child:nth-last-child(n + 3) {
-    grid-row: span 1;
-  }
-
-  .work:first-child:nth-last-child(n + 3) .work__media {
-    flex: none;
-    aspect-ratio: 16 / 10;
+    --row: clamp(200px, 32vw, 320px);
   }
 }
 
@@ -1001,17 +1006,30 @@ ul {
     scroll-snap-align: center;
   }
 
-  .works-grid {
-    grid-template-columns: minmax(0, 1fr);
+  /* Two columns: the lead spans both, the rest go in pairs, and an odd one out spans both too. */
+  .works-stack .works-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas: none;
+    grid-template-rows: none;
+    gap: var(--space-3);
   }
 
-  .work:first-child {
-    grid-column: auto;
+  .works-stack .works-grid > :nth-child(n) {
+    grid-area: auto;
   }
 
-  .work:first-child .work__media,
-  .work:first-child:nth-last-child(n + 3) .work__media {
+  .works-stack .works-grid > :first-child,
+  .works-stack .works-grid > :last-child:nth-child(even) {
+    grid-column: 1 / -1;
+  }
+
+  .work__media {
+    flex: none;
     aspect-ratio: 1 / 1;
+  }
+
+  .work--filler {
+    display: none;
   }
 
   .footer {

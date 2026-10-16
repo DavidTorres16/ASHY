@@ -2,6 +2,8 @@ import themeIcon from '@phosphor-icons/core/assets/regular/circle-half.svg?raw';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { disciplines } from './works/works.js';
+import iconBlack from '../design-system/assets/logo/svg/icon-black.svg';
+import iconCream from '../design-system/assets/logo/svg/icon-cream.svg';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -139,25 +141,59 @@ function worksOf(discipline) {
 
 // Each discipline keeps its skeletons until works.js lists at least one work for it.
 function renderWorks() {
-  for (const discipline of disciplines) {
+  disciplines.forEach((discipline, sectionIndex) => {
     const section = document.getElementById(discipline.id);
     section.querySelector('.discipline__title').textContent = discipline.name;
     section.querySelector('.discipline__desc').textContent = discipline.description;
 
     const works = worksOf(discipline);
-    if (!works.length) continue;
+    if (!works.length) return;
 
     section.querySelector('[data-count]').textContent =
       works.length === 1 ? '1 proyecto' : `${works.length} proyectos`;
 
-    const grid = section.querySelector('[data-works]');
-    grid.innerHTML = works.map(workTemplate).join('');
-    grid.removeAttribute('aria-busy');
+    // Each block picks the layout for its size; the large slot alternates sides between blocks
+    // and between disciplines.
+    let start = 0;
+    const blocks = blockSizes(works.length).map((size, blockIndex) => {
+      const items = works.slice(start, (start += size));
+      const mirror = (sectionIndex + blockIndex) % 2 === 1 ? ' works-grid--mirror' : '';
+      const filler = size === 1 ? fillerTemplate() : '';
+      return `<div class="works-grid works-grid--p${size}${mirror}">${items.map(workTemplate).join('')}${filler}</div>`;
+    });
+
+    const stack = section.querySelector('[data-works]');
+    stack.innerHTML = blocks.join('');
+    stack.removeAttribute('aria-busy');
 
     const deckMedia = document.querySelector(`[data-deck="${discipline.id}"] .deck__media`);
     deckMedia.classList.remove('deck__media--mark');
     deckMedia.innerHTML = `<img src="${works[0].src}" alt="" loading="eager" decoding="async" />`;
+  });
+}
+
+// Splits a work count into blocks of 3-6 so no block ever has a lone work (7 -> 4+3, 11 -> 4+4+3).
+function blockSizes(count) {
+  const sizes = [];
+  while (count > 6) {
+    const take = count - 4 >= 3 ? 4 : 3;
+    sizes.push(take);
+    count -= take;
   }
+  sizes.push(count);
+  return sizes;
+}
+
+// Keeps a single work company so the block still closes as a full rectangle.
+function fillerTemplate() {
+  return `
+    <figure class="work work--filler" aria-hidden="true">
+      <div class="card card--strong work__media">
+        <img class="card__mark logo--for-dark" src="${iconCream}" alt="" />
+        <img class="card__mark logo--for-light" src="${iconBlack}" alt="" />
+      </div>
+      <figcaption class="work__caption"><span class="work__title">Más proyectos en camino</span></figcaption>
+    </figure>`;
 }
 
 // Up to three works flagged `featured: true`, from any discipline; empty slots stay as skeletons.

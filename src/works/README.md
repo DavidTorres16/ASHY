@@ -37,6 +37,11 @@ Dentro de `works: [ ... ]` de la disciplina correspondiente:
   disciplinas en tarjetas inclinadas (máximo 3 en total, en el orden del archivo).
 - **El orden importa:** el primer trabajo de la lista es la pieza principal. Se ve más grande
   en su sección y aparece en la tarjeta de esa disciplina en la portada.
+- **La composición se arma sola según la cantidad:** cada sección siempre cierra un bloque
+  completo, sin imágenes sueltas en una fila. De 1 a 6 trabajos hay una composición distinta para
+  cada número (con 1 trabajo lo acompaña una tarjeta de "Más proyectos en camino"); con más de 6
+  se encadenan bloques de 3 a 6 que alternan el lado de la pieza grande. En celular, la principal
+  ocupa todo el ancho y el resto va en pares.
 - Mientras una disciplina no tenga trabajos, muestra skeletons y "Próximamente".
 - El nombre y la descripción de cada disciplina también se editan en ese archivo.
 
