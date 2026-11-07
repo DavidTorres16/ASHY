@@ -1,5 +1,5 @@
 @import "@fontsource/momo-trust-display/400.css";
-@import "@fontsource/poppins/600.css";
+@import "@fontsource/poppins/300.css";
 @import "@fontsource-variable/archivo/wdth.css";
 
 /* Display type is Momo Trust Display, chosen by the client for large and highlighted text; it ships
@@ -472,7 +472,7 @@ ul {
   font-family: var(--font-accent);
   font-size: clamp(1.125rem, 1.8vw, 1.5rem);
   line-height: 1.3;
-  font-weight: 600;
+  font-weight: 300;
   text-wrap: balance;
 }
 

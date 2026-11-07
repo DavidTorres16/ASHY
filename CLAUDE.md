@@ -6,7 +6,7 @@ valores exactos — nunca inventes ni aproximes colores o tipografía:
 - Color primario: #141414 (ink) · Color secundario: #f4efde (cream)
 - Tipografía display (títulos y textos que deben resaltar): Momo Trust Display, solo peso 400,
   elegida por la cliente para la web en lugar de Thocant · Tipografía de cuerpo: Acumin Variable Concept
-- Tipografía de acento: Poppins SemiBold (600), solo para la línea de rol del hero
+- Tipografía de acento: Poppins Light (300), solo para la línea de rol del hero
   ("Diseñadora gráfica, artista 3D e ilustradora"), pedida por la cliente.
 - Nada de texto en contorno (outline/stroke): la cliente pidió no usar tipografías con líneas.
 - Logo: usar los archivos en `design-system/assets/logo/svg/` tal cual, nunca
